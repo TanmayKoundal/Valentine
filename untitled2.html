@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>For Ira ❤️</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    overflow:hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg,#ffd6e7,#ffe9f2);
+}
+
+/* Floating hearts */
+.heart{
+    position:fixed;
+    bottom:-20px;
+    font-size:20px;
+    animation: floatUp 8s linear infinite;
+    opacity:0.7;
+}
+
+@keyframes floatUp{
+    to{
+        transform:translateY(-110vh) rotate(360deg);
+        opacity:0;
+    }
+}
+
+/* Center card */
+.card{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:white;
+    padding:40px 60px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 40px rgba(0,0,0,0.15);
+}
+
+h1{
+    margin-bottom:40px;
+    font-size:28px;
+}
+
+/* Buttons */
+.btn{
+    padding:15px 35px;
+    font-size:18px;
+    border:none;
+    border-radius:30px;
+    cursor:pointer;
+    position:fixed;
+}
+
+#yesBtn{
+    background:#ff4d88;
+    color:white;
+    left:40%;
+    bottom:80px;
+}
+
+#noBtn{
+    background:#eee;
+    color:#333;
+    left:60%;
+    bottom:80px;
+}
+
+.message{
+    font-size:26px;
+    color:#ff4d88;
+    display:none;
+    margin-top:20px;
+}
+
+/* Confetti */
+.confetti{
+    position:fixed;
+    width:10px;
+    height:10px;
+    top:-10px;
+    animation: fall 3s linear forwards;
+}
+
+@keyframes fall{
+    to{
+        transform: translateY(110vh) rotate(720deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <div style="font-size:60px;">💖</div>
+    <h1>Ira, will you be my valentine?</h1>
+    <div class="message" id="message">
+        Yaaay! I love you so much ❤️
+    </div>
+</div>
+
+<button class="btn" id="yesBtn">Yes</button>
+<button class="btn" id="noBtn">No</button>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const message = document.getElementById("message");
+
+// Move NO button anywhere on screen
+function moveNoButton(){
+    const maxX = window.innerWidth - noBtn.offsetWidth;
+    const maxY = window.innerHeight - noBtn.offsetHeight;
+
+    const randX = Math.random() * maxX;
+    const randY = Math.random() * maxY;
+
+    noBtn.style.left = randX + "px";
+    noBtn.style.top = randY + "px";
+}
+
+// Mobile + desktop triggers
+noBtn.addEventListener("touchstart", moveNoButton);
+noBtn.addEventListener("mouseover", moveNoButton);
+
+// YES action
+yesBtn.addEventListener("click", () => {
+    message.style.display = "block";
+    yesBtn.style.display = "none";
+    noBtn.style.display = "none";
+    startConfetti();
+});
+
+// Hearts
+function createHeart(){
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random()*20 + 15) + "px";
+    heart.innerHTML = "💗";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),8000);
+}
+setInterval(createHeart, 300);
+
+// Confetti
+function startConfetti(){
+    for(let i=0;i<150;i++){
+        const c = document.createElement("div");
+        c.classList.add("confetti");
+        c.style.left = Math.random()*100 + "vw";
+        c.style.backgroundColor = randomColor();
+        c.style.animationDuration = (Math.random()*2+2) + "s";
+        document.body.appendChild(c);
+        setTimeout(()=>c.remove(),4000);
+    }
+}
+
+function randomColor(){
+    const colors = ["#ff4d88","#ffd166","#06d6a0","#118ab2","#ef476f"];
+    return colors[Math.floor(Math.random()*colors.length)];
+}
+</script>
+
+</body>
+</html>
